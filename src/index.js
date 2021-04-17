@@ -10,12 +10,17 @@ import reducer from "./reducers"; //importing the default export from index insi
 
 //importing middlewares
 import middleware from "./middleware";
+//todo: if the account is already available, then automatically start instead of using immediate to true
+import MetaMaskContext from "./components/metamask";
 
 const store = createStore(reducer, middleware);
 
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+   <MetaMaskContext.Provider immediate={false}>
+  		<App />
+   </MetaMaskContext.Provider >
   </Provider>,
   document.getElementById("root")
 );

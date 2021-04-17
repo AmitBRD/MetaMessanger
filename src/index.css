@@ -40,6 +40,10 @@ a {
   border-width: 2px;
 }
 
+.btn.lg{
+  width: 500px;
+}
+
 .center {
   text-align: center;
 }

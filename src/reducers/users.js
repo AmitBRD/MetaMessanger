@@ -8,7 +8,11 @@ export default function users(state = {}, action) {
         ...state,
         ...action.users
       };
-
+    // case RECEIVE_ACCOUNT:
+    // 	return{
+    // 		...state,
+    // 		...action.account
+    // 	}
     default:
       return state;
   }

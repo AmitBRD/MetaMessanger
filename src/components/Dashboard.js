@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import Tweet from "./Tweet";
+import MetaMaskContext from "./metamask";
 
 class Dashboard extends Component {
+
   render() {
     console.log(this.props);
     return (
