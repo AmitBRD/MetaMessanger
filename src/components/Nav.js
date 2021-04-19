@@ -7,12 +7,12 @@ export default function Nav() {
       <ul>
         <li>
           <NavLink to="/" exact activeClassName="active">
-            Home
+            Inbox
           </NavLink>
         </li>
         <li>
           <NavLink to="/new" activeClassName="active">
-            New Tweet
+            New Message
           </NavLink>
         </li>
       </ul>

@@ -10,7 +10,7 @@ function MetaMaskButton({dispatch}) {
 
   function handleButtonClick() {
      //alert(`Web3 (${web3.version}) is enabled`);
-     dispatch(handleInitialData())
+     //dispatch(handleInitialData())
   }
 
   if (error && error.message === "MetaMask not installed") {
@@ -66,4 +66,4 @@ const mapStateToProps = state => ({
   web3: state.web3
 });
 
-export default connect(mapStateToProps)(MetaMaskButton);
+export default connect()(MetaMaskButton);

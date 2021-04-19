@@ -94,6 +94,7 @@ class Tweet extends Component {
 
 //id comes from the props passed by a parent component
 function mapStateToProps({ authedUser, users, tweets }, { id }) {
+  debugger;
   const tweet = tweets[id]; //getting the specific tweet by its id
   const parentTweet = tweet ? tweets[tweet.replyingTo] : null; //check if the specific tweet is a reply to another one. If so, get information about that parent tweet
 

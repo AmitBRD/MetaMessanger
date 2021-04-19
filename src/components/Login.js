@@ -23,4 +23,4 @@ function mapStateToProps({ web3 }) {
 }
 
 
-export default connect(mapStateToProps)(Login);
+export default connect()(Login);

@@ -33,7 +33,7 @@ class App extends Component {
       },function(err,publicKey){
         debugger
         //we need to set the publicKey on the global store
-        thus.props.dispatch(setMetamaskPk(publicKey));
+        thus.props.dispatch(setMetamaskPk(publicKey));  
         thus.props.dispatch(handleInitialData());
       })      //this.context.web3._requestManager.sendAsync({method:'eth_getEncryptionPublicKey',params:[this.context.accounts[0]]},function(data,err){ console.log(data);})
        
@@ -43,6 +43,18 @@ class App extends Component {
   }
 
   render() {
+    const { metamaskUser , authedUser} = this.props;
+    let render = null;
+    if(authedUser!=null){
+      debugger;
+      render = <div>
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/tweet/:id" component={TweetPage} />
+                <Route path="/new" component={NewTweet} />
+              </div> ;
+    }else{
+      render = null
+    }
     return (     
       <Router>
         {/* using a fragment so we don't add another element (div) to the DOM */}
@@ -51,12 +63,9 @@ class App extends Component {
           <div className="container">
           {this.props.loading === true ? <Login /> : (
             <Fragment>
-            <Nav />            
-              <div>
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/tweet/:id" component={TweetPage} />
-                <Route path="/new" component={NewTweet} />
-              </div>
+            <Nav />
+              <code>{`messages of ${metamaskUser.pk}`} </code>     
+               {render} 
             </Fragment>
             )}
           </div>
@@ -66,9 +75,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ authedUser}) {
+function mapStateToProps({ authedUser, metamaskUser}) {
   return {
-    loading: authedUser == null
+    loading: metamaskUser == null,
+    authedUser: authedUser,
+    metamaskUser : metamaskUser
   };
 }
 

@@ -17,10 +17,10 @@ export function handleInitialData() {
     dispatch(showLoading());
 
     return getInitialData().then(({ users, tweets }) => {
-      dispatch(receiveTweets(tweets));
+      dispatch(setAuthedUser(AUTHED_ID));
       dispatch(receiveUsers(users));
-      dispatch(setAuthedUser(AUTHED_ID)); //hard-coded above
-
+      dispatch(receiveTweets(tweets));
+       //hard-coded above
       //after everything has loaded, hide loading bar
       dispatch(hideLoading());
     });
