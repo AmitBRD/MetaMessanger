@@ -19,31 +19,61 @@ class App extends Component {
 
   componentDidMount() {
     debugger;
+    // var thus = this;
+    // if(this.getPk()){
+    //   this.context.web3 = window.web3;
+    //   thus.props.dispatch(setMetamaskPk(thus.getPk()));  
+    //   thus.props.dispatch(handleInitialData());
+      
+    // }
     //console.log(this.context);
     //this.props.dispatch(handleInitialData());
+  }
+
+  setPk(credential){
+     sessionStorage.setItem('credential', JSON.stringify(credential));
+  }
+
+  getAddress() {
+    const credential = sessionStorage.getItem('credential');
+    const userToken = JSON.parse(credential);
+    return userToken?.address
+  }
+
+  getPk() {
+    const credential = sessionStorage.getItem('credential');
+    const userToken = JSON.parse(credential);
+    return userToken?.pk
   }
 
   componentDidUpdate() {
      console.log(this.context);
      var thus = this;
      if(!this.context.awaiting && this.props.loading){
-       this.context.web3._requestManager.sendAsync({
-        method: 'eth_getEncryptionPublicKey',
-        params: [this.context.accounts[0]], // you must have access to the specified account
-      },function(err,publicKey){
-        debugger
-        //we need to set the publicKey on the global store
-        thus.props.dispatch(setMetamaskPk(publicKey));  
-        thus.props.dispatch(handleInitialData());
-      })      //this.context.web3._requestManager.sendAsync({method:'eth_getEncryptionPublicKey',params:[this.context.accounts[0]]},function(data,err){ console.log(data);})
-       
-     }
+       if(this.context.accounts[0] !== this.getAddress() || !this.getPk()){
+       //if(!this.getPk()){
+         this.context.web3._requestManager.sendAsync({
+          method: 'eth_getEncryptionPublicKey',
+          params: [this.context.accounts[0]], // you must have access to the specified account
+        },function(err,publicKey){
+          debugger
+          thus.setPk({pk:publicKey,address:thus.context.accounts[0]});
 
-    /* ... */
+          //we need to set the publicKey on the global store
+          thus.props.dispatch(setMetamaskPk(publicKey));  
+          thus.props.dispatch(handleInitialData());
+        }) 
+      } 
+      else{
+          this.props.dispatch(setMetamaskPk(this.getPk()));  
+          this.props.dispatch(handleInitialData());
+       }
+      }   //this.context.web3._requestManager.sendAsync({method:'eth_getEncryptionPublicKey',params:[this.context.accounts[0]]},function(data,err){ console.log(data);})
   }
 
   render() {
     const { metamaskUser , authedUser} = this.props;
+    const {web3} = this.context;
     let render = null;
     if(authedUser!=null){
       debugger;

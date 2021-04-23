@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment} from "react";
 import { connect } from "react-redux";
 import { handleAddTweet } from "../actions/tweets";
 
@@ -70,7 +70,7 @@ class NewTweet extends Component {
   render() {
     const { to,text, toHome } = this.state;
     const tweetLeft = 280 - text.length;
-
+    debugger;
     // redirect to home view if submitted from /new
     if (toHome === true) {
       return <Redirect to="/" />;
@@ -78,8 +78,10 @@ class NewTweet extends Component {
 
     return (
       <div>
-        <h3 className="center">Compose new Message</h3>
-
+       <h3 className="center">Compose new Message</h3>
+         {this.context.awaiting === true ? <span>Loading</span> : ( 
+       
+        <Fragment>
         <form className="new-tweet" onSubmit={this.handleSubmit}>
           <ENSAddress
             provider={this.context.web3.currentProvider}
@@ -104,6 +106,8 @@ class NewTweet extends Component {
             Submit
           </button>
         </form>
+        </Fragment>) 
+      }
       </div>
     );
   }
