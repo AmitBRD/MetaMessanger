@@ -22,3 +22,11 @@ export function saveLikeToggle (info) {
 export function saveTweet (info) {
   return _saveTweet(info)
 }
+
+export function getPk(ethAddress){
+
+}
+
+export function encryptMsg(){
+
+}

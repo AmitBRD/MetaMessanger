@@ -4,13 +4,15 @@ import { handleAddTweet } from "../actions/tweets";
 
 import { Redirect } from "react-router-dom";
 
-import MetaMaskContext from './metamask'
+import MetaMaskContext from './metamask';
+import ENSAddress from '@ensdomains/react-ens-address';
 
 class NewTweet extends Component {
   
   static contextType = MetaMaskContext;
 
   state = {
+    to:"",
     text: "",
     toHome: false
   };
@@ -23,9 +25,28 @@ class NewTweet extends Component {
     }));
   };
 
+  handleResolveError = e=>{
+    if(e){
+      console.log(e);
+    }
+  }
+
+  handleToChange = e=>{
+     const to = e.target.value;
+    this.setState(() => ({
+      to
+    }));
+  }
+
+  handleResolve = ({ name, address, type }) => {
+    if(type){
+      this.setState(()=>({to:address}))
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
-    const { text } = this.state;
+    const { to,text} = this.state;
 
     //if we are at route /new, there is no id, so we are not replying to any tweet
     //if we are at route /tweet/:id, we are replying to that id
@@ -35,18 +56,19 @@ class NewTweet extends Component {
     //this.context.web3._requestManager.sendAsync({method:})
 
     //todo: Add tweet to store
-    dispatch(handleAddTweet(text, id));
+    dispatch(handleAddTweet(text, to));
     // console.log("New Tweet: ", text);
 
     //reset state to default
     this.setState(() => ({
+      to:"",
       text: "",
       toHome: id ? false : true //if id is a thing, do not redirect, otherwise, you are at /new, so, after submit, redirect back to home
     }));
   };
 
   render() {
-    const { text, toHome } = this.state;
+    const { to,text, toHome } = this.state;
     const tweetLeft = 280 - text.length;
 
     // redirect to home view if submitted from /new
@@ -56,8 +78,17 @@ class NewTweet extends Component {
 
     return (
       <div>
-        <h3 className="center">Compose new Tweet </h3>
+        <h3 className="center">Compose new Message</h3>
+
         <form className="new-tweet" onSubmit={this.handleSubmit}>
+          <ENSAddress
+            provider={this.context.web3.currentProvider}
+            showBlockies={false}
+            onResolve={this.handleResolve}
+            className="small"
+            onError={this.handleResolveError}
+          />
+          <br />
           <textarea
             placeholder="What's happenning"
             value={text}
