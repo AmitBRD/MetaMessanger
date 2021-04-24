@@ -15,16 +15,24 @@ function addTweet(tweet) {
 }
 
 //args: tweet text and the tweet that the newTweet is replying to, if any
-export function handleAddTweet(text, replyingTo, to) {
+export function handleAddTweet(text, replyingTo, to, metamask) {
   //using getState to get the current state of our store
   return (dispatch, getState) => {
     const { authedUser,metamaskUser} = getState();
     dispatch(showLoading()); //show loading bar
     //get publicKey from to
     debugger;
-    encryptMessage(text,metamaskUser.pk);
+    const encrypted = encryptMessage(text,metamaskUser.pk);
+    metamask.ethereum.request({
+        method: 'eth_decrypt',
+        params: [encrypted, metamask.account],
+      })
+      .then((decryptedMessage) =>
+        console.log('The decrypted message is:', decryptedMessage)
+      )
+      .catch((error) => console.log(error.message));
     return saveTweet({
-      text,
+      text: encrypted,
       author: authedUser,
       replyingTo
     })

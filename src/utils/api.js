@@ -5,9 +5,10 @@ import {
   _saveTweet,
 } from './_DATA.js'
 
-// import * as ethUtil from 'ethereumjs-util';
-// import * as sigUtil from 'eth-sig-util';
+import * as ethUtil from 'ethereumjs-util';
+import * as sigUtil from 'eth-sig-util';
 
+const VERSION = 'x25519-xsalsa20-poly1305';
 
 export function getInitialData () {
   return Promise.all([
@@ -35,10 +36,10 @@ export function encryptMessage(msg, pk){
   const encryptedMessage = ethUtil.bufferToHex(
       Buffer.from(
         JSON.stringify(
-          sigUtil.encrypt(
+          sigUtil.encryptSafely(
             pk,
-            { data:msg },
-            'x25519-xsalsa20-poly1305'
+            {data:msg},
+           VERSION
           )
         ),
         'utf8'

@@ -50,13 +50,13 @@ class NewTweet extends Component {
 
     //if we are at route /new, there is no id, so we are not replying to any tweet
     //if we are at route /tweet/:id, we are replying to that id
-    const { dispatch, id,  } = this.props; //if id is a thing, it means we are replying to this id
+    const { dispatch, id,  metamask} = this.props; //if id is a thing, it means we are replying to this id
 
     debugger;
     //this.context.web3._requestManager.sendAsync({method:})
 
     //todo: Add tweet to store
-    dispatch(handleAddTweet(text, id, to));
+    dispatch(handleAddTweet(text, id, to, metamask ));
     // console.log("New Tweet: ", text);
 
     //reset state to default
