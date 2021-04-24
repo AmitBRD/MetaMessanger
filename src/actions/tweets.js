@@ -31,6 +31,7 @@ export function handleAddTweet(text, replyingTo, to, metamask) {
         console.log('The decrypted message is:', decryptedMessage)
       )
       .catch((error) => console.log(error.message));
+    
     return saveTweet({
       text: encrypted,
       author: authedUser,

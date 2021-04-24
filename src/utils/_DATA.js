@@ -236,7 +236,7 @@ function generateUID () {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
-function formatTweet ({ author, text, replyingTo = null }) {
+function formatTweet ({ author, text, replyingTo = null, isEncrypted= false }) {
   return {
     author,
     id: generateUID(),
@@ -245,6 +245,7 @@ function formatTweet ({ author, text, replyingTo = null }) {
     text,
     timestamp: Date.now(),
     replyingTo,
+    isEncrypted,
   }
 }
 
