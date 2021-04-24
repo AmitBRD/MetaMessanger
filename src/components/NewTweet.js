@@ -50,7 +50,7 @@ class NewTweet extends Component {
 
     //if we are at route /new, there is no id, so we are not replying to any tweet
     //if we are at route /tweet/:id, we are replying to that id
-    const { dispatch, id } = this.props; //if id is a thing, it means we are replying to this id
+    const { dispatch, id,  } = this.props; //if id is a thing, it means we are replying to this id
 
     debugger;
     //this.context.web3._requestManager.sendAsync({method:})
@@ -84,7 +84,7 @@ class NewTweet extends Component {
         <Fragment>
         <form className="new-tweet" onSubmit={this.handleSubmit}>
           <ENSAddress
-            provider={this.props.metamask.ethereum.currentProvider}
+            provider={this.props.metamask.ethereum}
             showBlockies={false}
             onResolve={this.handleResolve}
             className="small"
