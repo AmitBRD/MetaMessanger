@@ -16449,6 +16449,17 @@
     "underscore" "1.9.1"
     "utf8" "3.0.0"
 
+"web3@^0.20.2", "web3@0.20.2":
+  "integrity" "sha1-xU2sX8DjdzmcBMGm7LsS5FEyeNY="
+  "resolved" "https://registry.npmjs.org/web3/-/web3-0.20.2.tgz"
+  "version" "0.20.2"
+  dependencies:
+    "bignumber.js" "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
+    "crypto-js" "^3.1.4"
+    "utf8" "^2.1.1"
+    "xhr2" "*"
+    "xmlhttprequest" "*"
+
 "web3@^1.3.0":
   "integrity" "sha512-UyQW/MT5EIGBrXPCh/FDIaD7RtJTn5/rJUNw2FOglp0qoXnCQHNKvntiR1ylztk05fYxIF6UgsC76IrazlKJjw=="
   "resolved" "https://registry.npmjs.org/web3/-/web3-1.3.5.tgz"
@@ -16461,17 +16472,6 @@
     "web3-net" "1.3.5"
     "web3-shh" "1.3.5"
     "web3-utils" "1.3.5"
-
-"web3@0.20.2":
-  "integrity" "sha1-xU2sX8DjdzmcBMGm7LsS5FEyeNY="
-  "resolved" "https://registry.npmjs.org/web3/-/web3-0.20.2.tgz"
-  "version" "0.20.2"
-  dependencies:
-    "bignumber.js" "git+https://github.com/frozeman/bignumber.js-nolookahead.git"
-    "crypto-js" "^3.1.4"
-    "utf8" "^2.1.1"
-    "xhr2" "*"
-    "xmlhttprequest" "*"
 
 "web3@1.2.11":
   "version" "1.2.11"

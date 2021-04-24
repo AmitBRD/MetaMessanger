@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
-import { createMetaMaskContext } from "@daisypayments/react-metamask";
+import {useMetaMask} from "metamask-react";
 
-const MetaMaskContext = createMetaMaskContext();
-
-export default MetaMaskContext;
+export function withMetaMask(Component) {
+  return function WrappedComponent(props) {
+    const metamask = useMetaMask();
+    return <Component {...props} metamask={metamask} />;
+  }
+}

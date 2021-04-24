@@ -10,12 +10,12 @@ import NewTweet from "./NewTweet";
 import TweetPage from "./TweetPage";
 import Nav from "./Nav";
 import Login from "./Login"
-import MetaMaskContext from './metamask'
+import {withMetaMask} from './metamask'
 
 
 class App extends Component {
-
-  static contextType = MetaMaskContext;
+  //static contextType = MetamaskContext;
+  //static contextType = MyMetaMaskContext;
 
   componentDidMount() {
     debugger;
@@ -49,26 +49,31 @@ class App extends Component {
   componentDidUpdate() {
      console.log(this.context);
      var thus = this;
-     if(!this.context.awaiting && this.props.loading){
-       if(this.context.accounts[0] !== this.getAddress() || !this.getPk()){
+     if(this.props.metamask.ethereum && this.props.loading){
+       //if(this.props.metamask.accounts[0] !== this.getAddress() || !this.getPk()){
        //if(!this.getPk()){
-         this.context.web3._requestManager.sendAsync({
+         debugger;
+         this.props.metamask.ethereum.request({
           method: 'eth_getEncryptionPublicKey',
-          params: [this.context.accounts[0]], // you must have access to the specified account
-        },function(err,publicKey){
+          params: [this.props.metamask.account], // you must have access to the specified account
+        }).then(publicKey=>{
+
           debugger
-          thus.setPk({pk:publicKey,address:thus.context.accounts[0]});
+          thus.setPk({pk:publicKey,address:thus.props.metamask.account});
 
           //we need to set the publicKey on the global store
           thus.props.dispatch(setMetamaskPk(publicKey));  
           thus.props.dispatch(handleInitialData());
+          //thus.setState({laoding:false});
+        
         }) 
+      
       } 
-      else{
-          this.props.dispatch(setMetamaskPk(this.getPk()));  
-          this.props.dispatch(handleInitialData());
-       }
-      }   //this.context.web3._requestManager.sendAsync({method:'eth_getEncryptionPublicKey',params:[this.context.accounts[0]]},function(data,err){ console.log(data);})
+      // else{
+      //     this.props.dispatch(setMetamaskPk(this.getPk()));  
+      //     this.props.dispatch(handleInitialData());
+      //  }
+      //}   //this.context.web3._requestManager.sendAsync({method:'eth_getEncryptionPublicKey',params:[this.context.accounts[0]]},function(data,err){ console.log(data);})
   }
 
   render() {
@@ -113,4 +118,4 @@ function mapStateToProps({ authedUser, metamaskUser}) {
   };
 }
 
-export default connect(mapStateToProps, null, null, {context: MetaMaskContext})(App);
+export default connect(mapStateToProps, null, null)(withMetaMask(App));

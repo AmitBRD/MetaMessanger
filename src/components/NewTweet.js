@@ -4,12 +4,12 @@ import { handleAddTweet } from "../actions/tweets";
 
 import { Redirect } from "react-router-dom";
 
-import MetaMaskContext from './metamask';
 import ENSAddress from '@ensdomains/react-ens-address';
+import {withMetaMask} from './metamask'
 
 class NewTweet extends Component {
   
-  static contextType = MetaMaskContext;
+  //static contextType = MetaMaskContext;
 
   state = {
     to:"",
@@ -56,7 +56,7 @@ class NewTweet extends Component {
     //this.context.web3._requestManager.sendAsync({method:})
 
     //todo: Add tweet to store
-    dispatch(handleAddTweet(text, to));
+    dispatch(handleAddTweet(text, id, to));
     // console.log("New Tweet: ", text);
 
     //reset state to default
@@ -84,7 +84,7 @@ class NewTweet extends Component {
         <Fragment>
         <form className="new-tweet" onSubmit={this.handleSubmit}>
           <ENSAddress
-            provider={this.context.web3.currentProvider}
+            provider={this.props.metamask.ethereum.currentProvider}
             showBlockies={false}
             onResolve={this.handleResolve}
             className="small"
@@ -113,4 +113,4 @@ class NewTweet extends Component {
   }
 }
 
-export default connect()(NewTweet);
+export default connect()(withMetaMask(NewTweet));

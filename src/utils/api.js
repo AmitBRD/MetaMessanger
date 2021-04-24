@@ -5,6 +5,10 @@ import {
   _saveTweet,
 } from './_DATA.js'
 
+// import * as ethUtil from 'ethereumjs-util';
+// import * as sigUtil from 'eth-sig-util';
+
+
 export function getInitialData () {
   return Promise.all([
     _getUsers(),
@@ -27,6 +31,18 @@ export function getPk(ethAddress){
 
 }
 
-export function encryptMsg(){
-
+export function encryptMessage(msg, pk){
+  const encryptedMessage = ethUtil.bufferToHex(
+      Buffer.from(
+        JSON.stringify(
+          sigUtil.encrypt(
+            pk,
+            { data:msg },
+            'x25519-xsalsa20-poly1305'
+          )
+        ),
+        'utf8'
+      )
+    );
+  return encryptedMessage;
 }

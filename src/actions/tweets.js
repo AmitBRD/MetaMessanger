@@ -1,4 +1,4 @@
-import { saveLikeToggle, saveTweet } from "../utils/api";
+import { saveLikeToggle, saveTweet,encryptMessage } from "../utils/api";
 
 //importing loading bar to show when we submit a tweet
 import { showLoading, hideLoading } from "react-redux-loading";
@@ -15,11 +15,14 @@ function addTweet(tweet) {
 }
 
 //args: tweet text and the tweet that the newTweet is replying to, if any
-export function handleAddTweet(text, replyingTo) {
+export function handleAddTweet(text, replyingTo, to) {
   //using getState to get the current state of our store
   return (dispatch, getState) => {
-    const { authedUser } = getState();
+    const { authedUser,metamaskUser} = getState();
     dispatch(showLoading()); //show loading bar
+    //get publicKey from to
+    debugger;
+    encryptMessage(text,metamaskUser.pk);
     return saveTweet({
       text,
       author: authedUser,
